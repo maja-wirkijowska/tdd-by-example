@@ -79,4 +79,14 @@ public class MoneyTest {
         assertEquals(1, new Bank().rate("USD", "USD"));
         assertEquals(1, new Bank().rate("CHF", "CHF"));
     }
+
+    @Test
+    public void testMixedAddition() {
+        Expression dFive = Money.dollar(5);
+        Expression fTen = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Money result = bank.reduce(dFive.plus(fTen), "USD");
+        assertEquals(Money.dollar(10), result);
+    }
 }
